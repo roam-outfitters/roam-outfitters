@@ -75,8 +75,8 @@ const deferredImages = await Promise.all(
             fetchpriority="high"
         />
         <p class="font-serif text-2xl md:text-3xl text-white/90 font-normal italic mb-12">Montana's Premier Trout Guides</p>
-        <a href="#about" class="inline-block text-white/70 hover:text-white transition">
-            <span class="block text-xs tracking-widest uppercase mb-2">Explore</span>
+        <a href="#about" class="inline-block text-accent/70 hover:text-accent transition">
+            <span class="block text-xs tracking-widest uppercase mb-2 text-white/60">Explore</span>
             <svg class="w-5 h-5 mx-auto animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
             </svg>
@@ -124,4 +124,32 @@ const deferredImages = await Promise.all(
             allSlides[currentImage].removeAttribute('aria-hidden');
         }, 6000);
     });
+
+    // Mouse parallax on hero (desktop only)
+    if (window.matchMedia('(hover: hover)').matches) {
+        const heroSection = document.querySelector('.hero-bg');
+        let rafId = null;
+
+        heroSection?.addEventListener('mousemove', (e) => {
+            if (rafId) return;
+            rafId = requestAnimationFrame(() => {
+                const rect = heroSection.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12;
+                const y = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
+
+                const imgs = heroSection.querySelectorAll('.hero-image img');
+                imgs.forEach(img => {
+                    img.style.transform = `scale(1.08) translate(${x}px, ${y}px)`;
+                });
+                rafId = null;
+            });
+        });
+
+        heroSection?.addEventListener('mouseleave', () => {
+            const imgs = heroSection.querySelectorAll('.hero-image img');
+            imgs.forEach(img => {
+                img.style.transform = 'scale(1.08) translate(0px, 0px)';
+            });
+        });
+    }
 </script>

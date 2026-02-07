@@ -15,6 +15,8 @@
   --font-sans: "Inter", system-ui, sans-serif;
   --color-stone-850: #1c1917;
   --color-stone-950: #0f0e0d;
+  --color-accent: #c49a3c;
+  --color-accent-dark: #a67c2e;
 }
 
 /* Smooth scrolling */
@@ -22,7 +24,42 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Hero with cycling backgrounds */
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL ANIMATIONS
+   ═══════════════════════════════════════════ */
+
+html.js [data-reveal] {
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.js [data-reveal="up"],
+html.js [data-reveal=""] {
+  transform: translateY(32px);
+}
+
+html.js [data-reveal="left"] {
+  transform: translateX(-40px);
+}
+
+html.js [data-reveal="right"] {
+  transform: translateX(40px);
+}
+
+html.js [data-reveal="scale"] {
+  transform: scale(0.96);
+}
+
+html.js [data-reveal].revealed {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+
+/* ═══════════════════════════════════════════
+   HERO WITH CYCLING BACKGROUNDS
+   ═══════════════════════════════════════════ */
+
 .hero-bg {
   position: relative;
   background-color: #0f0e0d;
@@ -41,6 +78,7 @@ html {
   inset: 0;
   opacity: 0;
   transition: opacity 1.5s ease-in-out;
+  overflow: hidden;
 }
 
 .hero-image.active {
@@ -51,6 +89,9 @@ html {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(1.08);
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 .hero-content {
@@ -58,7 +99,80 @@ html {
   z-index: 2;
 }
 
-/* Gallery grid */
+/* ═══════════════════════════════════════════
+   NAV SCROLL TRANSITION
+   ═══════════════════════════════════════════ */
+
+.nav-bar {
+  background: transparent;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+}
+
+.nav-bar.nav-scrolled {
+  background: rgba(15, 14, 13, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════════ */
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+}
+
+/* ═══════════════════════════════════════════
+   ACCENT ELEMENTS
+   ═══════════════════════════════════════════ */
+
+.accent-line {
+  display: block;
+  width: 48px;
+  height: 1.5px;
+  background: var(--color-accent, #c49a3c);
+  margin-top: 1rem;
+}
+
+.accent-line-center {
+  display: block;
+  width: 48px;
+  height: 1.5px;
+  background: var(--color-accent, #c49a3c);
+  margin: 1rem auto 0;
+}
+
+/* ═══════════════════════════════════════════
+   MOUNTAIN RIDGE DIVIDER
+   ═══════════════════════════════════════════ */
+
+.mountain-divider {
+  position: relative;
+  z-index: 2;
+  line-height: 0;
+}
+
+.mountain-divider path.ridge-line {
+  stroke-dasharray: 4000;
+  stroke-dashoffset: 4000;
+  transition: stroke-dashoffset 2.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mountain-divider.revealed path.ridge-line {
+  stroke-dashoffset: 0;
+}
+
+/* ═══════════════════════════════════════════
+   GALLERY
+   ═══════════════════════════════════════════ */
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -106,7 +220,10 @@ html {
   }
 }
 
-/* Lightbox */
+/* ═══════════════════════════════════════════
+   LIGHTBOX
+   ═══════════════════════════════════════════ */
+
 .lightbox {
   display: none;
   position: fixed;
@@ -133,7 +250,10 @@ html {
   transform: scale(1.03);
 }
 
-/* Parallax photo dividers (fallback for iOS) */
+/* ═══════════════════════════════════════════
+   PARALLAX FALLBACK (iOS / touch)
+   ═══════════════════════════════════════════ */
+
 @supports (-webkit-overflow-scrolling: touch) {
   .bg-fixed {
     background-attachment: scroll !important;
@@ -146,7 +266,10 @@ html {
   }
 }
 
-/* Details/accordion for what to bring */
+/* ═══════════════════════════════════════════
+   DETAILS ACCORDION
+   ═══════════════════════════════════════════ */
+
 details summary {
   cursor: pointer;
   list-style: none;
@@ -160,7 +283,10 @@ details[open] .expand-icon {
   transform: rotate(45deg);
 }
 
-/* Skip to content link */
+/* ═══════════════════════════════════════════
+   SKIP LINK
+   ═══════════════════════════════════════════ */
+
 .skip-link {
   position: absolute;
   top: -40px;
@@ -174,4 +300,34 @@ details[open] .expand-icon {
 
 .skip-link:focus {
   top: 0;
+}
+
+/* ═══════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-image img {
+    transform: scale(1) !important;
+    transition: none !important;
+  }
+
+  .mountain-divider path.ridge-line {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+
+  .grain-overlay {
+    display: none;
+  }
+
+  .nav-bar {
+    transition: none;
+  }
 }

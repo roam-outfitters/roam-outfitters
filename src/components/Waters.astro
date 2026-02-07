@@ -17,14 +17,19 @@ const mountainRiverForest = await getImage({
     format: 'avif',
     quality: 70,
 });
+
 ---
 
 <section id="waters" class="bg-stone-900 text-white">
-    <!-- Header + river names -->
+    <!-- Header + river names ticker -->
     <div class="py-24 px-6">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="font-serif text-4xl md:text-5xl font-normal mb-10">Waters We Fish</h2>
-            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-stone-400 font-serif text-lg md:text-xl tracking-wide">
+            <h2 class="font-serif text-4xl md:text-5xl font-normal mb-3" data-reveal>
+                Waters We Fish
+            </h2>
+            <span class="accent-line-center" data-reveal></span>
+
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-stone-400 font-serif text-lg md:text-xl tracking-wide mt-10" data-reveal>
                 <span>Gallatin</span>
                 <span class="text-stone-600" aria-hidden="true">&middot;</span>
                 <span>Yellowstone</span>
@@ -42,7 +47,7 @@ const mountainRiverForest = await getImage({
 
     <!-- Paragraph 1 -->
     <div class="px-6 pb-16">
-        <div class="max-w-3xl mx-auto">
+        <div class="max-w-3xl mx-auto" data-reveal>
             <p class="text-stone-300 leading-relaxed text-lg">
                 I'm based in the Gallatin Valley of Southwest Montana, and the range of water I get to
                 fish is something I never take for granted. From classic freestone rivers to legendary
@@ -64,7 +69,7 @@ const mountainRiverForest = await getImage({
 
     <!-- Paragraph 2 -->
     <div class="px-6 py-16">
-        <div class="max-w-3xl mx-auto">
+        <div class="max-w-3xl mx-auto" data-reveal>
             <p class="text-stone-300 leading-relaxed text-lg">
                 I regularly guide on iconic rivers like the Gallatin, Yellowstone, Madison, Jefferson,
                 Boulder, and Missouri, each with its own character and challenges. Freestone systems
@@ -87,7 +92,7 @@ const mountainRiverForest = await getImage({
 
     <!-- Paragraph 3 -->
     <div class="px-6 py-16 pb-24">
-        <div class="max-w-3xl mx-auto">
+        <div class="max-w-3xl mx-auto" data-reveal>
             <p class="text-stone-300 leading-relaxed text-lg">
                 Beyond rivers, I have access to reservoirs and select private fisheries that open up
                 opportunities during runoff, shoulder seasons, or when you just want something different.
